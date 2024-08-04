@@ -25,7 +25,7 @@ products.forEach((product) =>{
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class ="js-dropdown" data-product-id="${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -46,7 +46,7 @@ products.forEach((product) =>{
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary data-product-id = ${product.id}">
+          <button class="add-to-cart-button button-primary" data-product-id = "${product.id}">
             Add to Cart
           </button>
         </div>
@@ -56,32 +56,35 @@ products.forEach((product) =>{
 document.querySelector('.js-product-grid').innerHTML = productsHTML
 
 
-document.querySelectorAll('.add-to-cart-button').forEach((button) => {
+document.querySelectorAll('.add-to-cart-button')
+    .forEach((button) => {
         button.addEventListener('click' , () => {
             const productId = button.dataset.productId
+            
+            const selectedQuantity = Number(document.querySelector(`.js-dropdown[data-product-id="${productId}"]`).value)
             let matchingItem
 
             cart.forEach((item) => {
-                if(productId === item.productId) matchingItem = item
+                if(productId === item.productId) matchingItem = item;
             })
 
             if(matchingItem){
-                matchingItem.quantity += 1
+                matchingItem.quantity += selectedQuantity
             }
             else{
                 cart.push({
                     productId : productId,
-                    quantity: 1
+                    quantity: selectedQuantity
                 })
             }
 
-            let cartQuantity =''
+            let cartQuantity = 0
 
             cart.forEach((item) => {
-                cartQuantity = item.quantity
+                cartQuantity += item.quantity
             }) 
 
-            
+            document.querySelector('.cart-quantity').textContent = cartQuantity
         })
     })
 
