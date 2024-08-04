@@ -1,10 +1,10 @@
-import { cart } from "../data/cart.js";
+import * as cartModule from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let productsHTML = '';
 
-products.forEach((product) =>{
-    productsHTML += `
+products.forEach((product) => {
+  productsHTML += `
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -24,7 +24,7 @@ products.forEach((product) =>{
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2) }
+            $${(product.priceCents / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -59,36 +59,25 @@ products.forEach((product) =>{
 document.querySelector('.js-product-grid').innerHTML = productsHTML
 
 
+
+function updateCart(){
+  let cartQuantity = 0
+
+      cartModule.cart.forEach((item) => {
+        cartQuantity += item.quantity
+      })
+
+      document.querySelector('.cart-quantity').textContent = cartQuantity
+}
+
 document.querySelectorAll('.add-to-cart-button')
-    .forEach((button) => {
-        button.addEventListener('click' , () => {
-            const productId = button.dataset.productId
-            
-            const selectedQuantity = Number(document.querySelector(`.js-dropdown[data-product-id="${productId}"]`).value)
-            let matchingItem
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId
 
-            cart.forEach((item) => {
-                if(productId === item.productId) matchingItem = item;
-            })
-
-            if(matchingItem){
-                matchingItem.quantity += selectedQuantity
-            }
-            else{
-                cart.push({
-                    productId : productId,
-                    quantity: selectedQuantity
-                })
-            }
-
-            let cartQuantity = 0
-
-            cart.forEach((item) => {
-                cartQuantity += item.quantity
-            }) 
-
-            document.querySelector('.cart-quantity').textContent = cartQuantity
-        })
+      cartModule.addtoCart(productId)
+      updateCart()
     })
+  })
 
 
