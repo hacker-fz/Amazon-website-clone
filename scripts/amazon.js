@@ -2,6 +2,8 @@ import * as cartModule from "../data/cart.js";
 import { products } from "../data/products.js";
 import { currency } from "./utils/money.js";
 
+document.addEventListener('DOMContentLoaded', updateCart);
+
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -70,6 +72,7 @@ function updateCart(){
 
       document.querySelector('.cart-quantity').textContent = cartQuantity
 }
+
 
 document.querySelectorAll('.add-to-cart-button')
   .forEach((button) => {

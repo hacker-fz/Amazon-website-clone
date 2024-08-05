@@ -2,7 +2,7 @@ import { cart, removeCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { currency } from "./utils/money.js";
 
-
+document.addEventListener('DOMContentLoaded', updateCheckoutItems);
 let cartHTML = ''
 
 cart.forEach((item) => {
@@ -89,6 +89,17 @@ cart.forEach((item) => {
     `
 })
 
+function updateCheckoutItems(){
+  let checkoutQuantity = 0
+
+      cart.forEach((item) => {
+        checkoutQuantity += item.quantity
+      })
+
+      document.querySelector('.js-checkout-items').textContent = `${checkoutQuantity} Items`
+}
+
+
 document.querySelector('.order-summary').innerHTML = cartHTML
 
 document.querySelectorAll('.delete-quantity-link')
@@ -96,6 +107,7 @@ document.querySelectorAll('.delete-quantity-link')
     link.addEventListener('click',() => {
       const productId = link.dataset.productId
       removeCart(productId)
+      updateCheckoutItems()
 
       const container = document.querySelector(`.js-cart-container-${productId}`);
       container.remove() 
