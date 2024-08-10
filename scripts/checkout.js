@@ -1,11 +1,11 @@
-import { cart, removeCart, saveCart } from "../data/cart.js";
+import { cart, removeCart, saveCart, updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { currency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"
 import { deliveryOptions } from "../data/deliveryoption.js";
 
-document.addEventListener('DOMContentLoaded', updateCheckoutItems);
-let cartHTML = '';
+function updateRenderOrder(){
+  let cartHTML = '';
 
 cart.forEach((item) => {
   const productId = item.productId;
@@ -84,7 +84,7 @@ function deliveryHTML(matchingProduct, item) {
 
     const pricestr = deliveryOption.priceCents === 0 ? 'FREE' : `$${currency(deliveryOption.priceCents)} -`
     Html += `
-    <div class="delivery-option">
+    <div class="delivery-option" data-product-id = "${matchingProduct.id}" data-delivery-id = "${deliveryOption.id}">
       <input type="radio" ${isChecked ?'checked' : ''} class="delivery-option-input" name="delivery-option-${matchingProduct.id}">
       <div>
         <div class="delivery-option-date">
@@ -145,3 +145,16 @@ document.querySelectorAll('.delete-quantity-link').forEach((link) => {
     container.remove();
   });
 });
+
+
+document.querySelectorAll('.delivery-option')
+  .forEach((element) => {
+    element.addEventListener('click' , () => {
+      const {productId , deliveryId} = element.dataset
+      updateDeliveryOption(productId, deliveryId)
+      updateRenderOrder()
+    })
+  })
+}
+
+updateRenderOrder()
