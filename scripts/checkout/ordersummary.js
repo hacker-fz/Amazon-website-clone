@@ -121,6 +121,7 @@ export function renderOrder() {
 
             // Update the checkout items
             updateCheckoutItems();
+            renderPayment()
 
             // Optionally, re-render the cart item details if needed
             console.log(`Product ${productId} updated to quantity ${selectedQuantity}`);
@@ -132,6 +133,7 @@ export function renderOrder() {
             const productId = link.dataset.productId;
             removeCart(productId);
             updateCheckoutItems();
+            renderPayment()
 
             const container = document.querySelector(`.js-cart-container-${productId}`);
             container.remove();

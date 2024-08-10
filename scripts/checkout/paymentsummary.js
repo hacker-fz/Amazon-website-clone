@@ -9,12 +9,14 @@ export function renderPayment(){
 
     let productPriceCents = 0
     let shippingPriceCents = 0
+    let checkoutQuantity = 0;
 
     cart.forEach((item) => {
         const product = getProduct(item.productId)
         productPriceCents += product.priceCents * item.quantity
         const deliveryDetails = getDeliveryDetails(item.deliveryId)
         shippingPriceCents += deliveryDetails.priceCents
+        checkoutQuantity += item.quantity;
     })
 
     const totalCents = productPriceCents + shippingPriceCents
@@ -27,7 +29,7 @@ export function renderPayment(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div class="payment-items">Items (${checkoutQuantity}):</div>
             <div class="payment-summary-money">$${currency(productPriceCents)}</div>
           </div>
 
