@@ -32,7 +32,7 @@ export function renderOrder() {
             ${matchingProduct.name}
           </div>
           <div class="product-price">
-            $${currency(matchingProduct.priceCents)}
+            ${matchingProduct.getpriceCents()}
           </div>
           <div class="product-quantity">
             <span>

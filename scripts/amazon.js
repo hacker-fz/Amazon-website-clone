@@ -1,6 +1,6 @@
 import * as cartModule from "../data/cart.js";
 import { products } from "../data/products.js";
-import { currency } from "./utils/money.js";
+// import { currency } from "./utils/money.js";
 
 document.addEventListener('DOMContentLoaded', updateCart);
 
@@ -20,14 +20,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src='${product.getStarUrl()}'>
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${currency(product.priceCents)}
+            ${product.getpriceCents()}
           </div>
 
           <div class="product-quantity-container">
