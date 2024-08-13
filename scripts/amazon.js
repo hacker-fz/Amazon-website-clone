@@ -1,10 +1,13 @@
 import * as cartModule from "../data/cart.js";
-import { products } from "../data/products.js";
+import { products, loadproducts } from "../data/products.js";
 // import { currency } from "./utils/money.js";
 
-document.addEventListener('DOMContentLoaded', updateCart);
 
-let productsHTML = '';
+loadproducts(renderProducts);
+
+function renderProducts(){
+  document.addEventListener('DOMContentLoaded', updateCart);
+  let productsHTML = '';
 
 products.forEach((product) => {
   productsHTML += `
@@ -85,5 +88,8 @@ document.querySelectorAll('.add-to-cart-button')
       updateCart()
     })
   })
+}
+
+
 
 
